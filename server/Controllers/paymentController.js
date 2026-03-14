@@ -20,7 +20,7 @@ export const buySubscription = async function(req, res, next) {
   const user = await User.findById(id);
 
   if (!user) {
-    return next(new AppError('Unauthorized, please login'));
+    return next(new AppError('Unauthorized, please login',400));
   }
 
   // Checking the user role
@@ -50,7 +50,7 @@ if (!user.subscription) {
     success: true,
     message: 'subscribed successfully',
     subscription_id: subscription.id,
-  });
+  }); 
 }//catch(e){
  // return next(new AppError('Unable to subscribe, please try again later',500));
  catch (e) {
@@ -83,7 +83,7 @@ export const verifySubscription = async function(req, res, next) {
   const user = await User.findById(id);
 
     if (!user) {
-    return next(new AppError('Unauthorized, please login'));
+    return next(new AppError('Unauthorized, please login',400));
   }
 
   // Getting the subscription ID from the user object
@@ -138,7 +138,7 @@ export const cancelSubscription = async function(req, res, next) {
   const user = await User.findById(id);
 
     if (!user) {
-    return next(new AppError('Unauthorized, please login'));
+    return next(new AppError('Unauthorized, please login',400));   
   }
 
   // Checking the user role

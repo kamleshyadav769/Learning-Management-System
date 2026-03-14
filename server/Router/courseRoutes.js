@@ -11,14 +11,14 @@ import {
 } from '../Controllers/courseController.js';
 import {
   authorizeRoles,
- // authorizeSubscribers,
+  authorizeSubscribers,
   isLoggedIn,
 } from '../middlewares/authMiddleware.js';
 import upload from '../middlewares/multerMiddleware.js';
 
 const router = Router();
 
-// , isLoggedIn, authorizeRoles("ADMIN", "USER") - middlewares
+// , isLoggedIn, authorizeRoles("ADMIN", "USER") - middlewares  
 
 // OLD Code
  router.get("/", getAllCourses);
