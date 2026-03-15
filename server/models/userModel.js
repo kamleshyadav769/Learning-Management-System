@@ -25,7 +25,12 @@ const userSchema=new Schema({
         required:[true,"Please provide your password"],
         minLength:[8,"Password must be at least 8 characters"],
        select: false
+    }, isVerified: {
+        type: Boolean,
+        default: false,
     },
+    verificationToken: String,
+    verificationTokenExpire: Date,
     avatar:{
         public_id:{
             type:String,
@@ -91,6 +96,23 @@ userSchema.methods={
 
     return resetToken;
   },
+  
+    generateVerificationToken: async function () {
+        // creating a random token using node's built-in crypto module
+        const verificationToken = Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit numeric token
+
+        // Again using crypto module to hash the generated verificationToken with sha256 algorithm and storing it in database
+        this.verificationToken = crypto
+            .createHash('sha256')
+            .update(verificationToken)
+            .digest('hex');
+
+        // Adding verification token expiry to 15 minutes
+        this.verificationTokenExpire = Date.now() + 15 * 60 * 1000;
+
+        return verificationToken;
+    }
+
 
 }
 const User=model("User",userSchema);

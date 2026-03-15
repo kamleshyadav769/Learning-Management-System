@@ -6,6 +6,8 @@ import crypto from 'crypto';
 import AppError from "../utils/AppError.js";
 import User from "../models/userModel.js";
 import sendEmail from '../utils/sendEmail.js';
+import { VERIFICATION_EMAIL_TEMPLATE } from '../utils/verifyEmailteplate.js';
+
 
 const cookieOptions = {
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
@@ -79,6 +81,23 @@ const user = await User.create({
 
 }
 
+       const verificationToken = await user.generateVerificationToken();
+       console.log("OTP sent to email:", verificationToken);
+       await user.save();
+       const subject = 'Email Verification';
+       const message = VERIFICATION_EMAIL_TEMPLATE.replace('{verificationCode}', verificationToken);
+
+       try {
+         await sendEmail(email, subject, message);
+
+       } catch (e) {
+         //console.log("Error in sending email",e);
+         user.verificationToken = undefined;
+         user.verificationTokenExpire = undefined;
+         await user.save();
+         return next(new AppError(e.message, 500));
+       }
+
 
 
     // Setting the password to undefined so it does not get sent in the response
@@ -98,6 +117,45 @@ const user = await User.create({
     message: 'User registered  successfully',
     user,
   });
+};
+
+const verifyEmail = async (req, res, next) => {
+  const { code } = req.body;
+  try {
+
+    const hashedcode = crypto
+      .createHash('sha256')
+      .update(code)
+      .digest('hex');
+
+    console.log("code:", code);
+    console.log("hashedcode:", hashedcode);
+    const user = await User.findOne({
+      verificationToken: hashedcode,
+      verificationTokenExpire: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return next(new AppError("Invalid or expired verification code", 400));
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationTokenExpire = undefined;
+    await user.save();
+
+
+
+    res.status(200).json({
+      success: true,
+      message: "Email verified successfully",
+      user,
+
+    });
+  } catch (error) {
+    console.log("error in verifyEmail ", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
 };
 
     
@@ -307,4 +365,4 @@ const updateUser=async(req,res,next)=>{
   })
 }
 
-export {register,login,logout,getProfile,resetPassword,forgotPassword,changePassword,updateUser};
+export {register ,verifyEmail,login,logout,getProfile,resetPassword,forgotPassword,changePassword,updateUser};
