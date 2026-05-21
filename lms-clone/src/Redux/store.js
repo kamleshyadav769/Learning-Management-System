@@ -15,7 +15,8 @@ const store = configureStore({
         lecture: lectureSliceReducer,
         stat: statSliceReducer
     },
-    devTools: true
+    //devTools: process.env.NODE_ENV !== 'production', if i create my react app using create-react-app  then i use this line to enable devtools
+    devTools: import.meta.env.NODE_ENV !== 'production',//this is used to enable devtools in vite projects
 });
 
 export default store;

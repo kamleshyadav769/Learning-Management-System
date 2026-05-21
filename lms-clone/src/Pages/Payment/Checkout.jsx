@@ -13,7 +13,12 @@ function Checkout() {
     const navigate = useNavigate();
     const razorpayKey = useSelector((state) => state?.razorpay?.key);
     const subscription_id = useSelector((state) => state?.razorpay?.subscription_id);
-  
+  const userData= useSelector((state) => state?.auth?.data);
+  const isPaymentVerified = useSelector((state) => state?.razorpay?.isPaymentVerified);
+
+    console.log(subscription_id);
+    console.log(razorpayKey);
+
     const paymentDetails = {
         razorpay_payment_id: "",
 
@@ -32,17 +37,32 @@ function Checkout() {
         const options = {
             key: razorpayKey,
             subscription_id: subscription_id,
-             method: {
-        netbanking: true,
-        card: true,
-        upi: true,
-        wallet: true
-    },
+    //          method: {
+    //     netbanking: true,
+    //     card: true,
+    //     upi: true,
+    //     wallet: true
+    // },
+
+
             name: "Coursify Pvt. Ltd.",
             description: "Subscription",
-            theme: {
+             theme: {
                 color: '#F37254'
-            },
+             },
+                prefill: {
+                    name: userData?.fullname,
+                    email: userData?.email,
+                },
+
+
+            // modal: {
+            //     ondismiss: function () {
+            //         toast.error("Payment cancelled");
+            //     }
+            // },
+
+
             
             handler: async function (response) {
                 paymentDetails.razorpay_payment_id = response.razorpay_payment_id;
@@ -50,10 +70,15 @@ function Checkout() {
                 paymentDetails.razorpay_subscription_id = response.razorpay_subscription_id;
               
                 toast.success("Payment successfull");
-
+try{
                 const res = await dispatch(verifyUserPayment(paymentDetails));
-                console.log(res);
-                res?.payload?.success ? navigate("/checkout/success") : navigate("/checkout/fail");
+                console.log("payment verification response: ",res);
+                console.log("isPaymentVerified: ",isPaymentVerified);
+                 (res?.payload?.success) ? navigate("/checkout/success") : navigate("/checkout/fail");
+} catch (error) {
+    console.log(error);
+    toast.error("Payment verification failed");
+}
             }
         }
         const paymentObject = new window.Razorpay(options);
@@ -64,15 +89,17 @@ function Checkout() {
         await dispatch(getRazorPayId());
         await dispatch(purchaseCourseBundle());
     }*/
-
+   
     useEffect(() => {
+
+
          async function load() {
         await dispatch(getRazorPayId());
         await dispatch(purchaseCourseBundle());
     }
         load();
     }, [dispatch]); 
-
+    // AFTER WRITING THIS CODE LOGIC GO index.html file and add this script tag  <script src="https://checkout.razorpay.com/v1/checkout.js"></script> after this  window.Razorpay will be available and we can use it in our code to open razorpay payment gateway when user click on buy now button
     return (
         <HomeLayout>
             <form
