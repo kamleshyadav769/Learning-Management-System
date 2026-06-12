@@ -1,4 +1,4 @@
-{/*import aboutMainImage from "../Assets/Images/aboutMainImage.png";
+{/*import aboutMainImage from "../assets/Images/aboutMainImage.png";
 import CarouselSlide from "../Components/CarouselSlide";
 import { celebrities } from "../Constants/CelebrityData";
 import HomeLayout from "../Layouts/HomeLayout";
@@ -54,12 +54,12 @@ function AboutUs() {
 export default AboutUs;
 */}
 
-import apj from "../Assets/Images/apj.png";
-import billGates from "../Assets/Images/billGates.png";
-import einstein from "../Assets/Images/einstein.png";
-import nelsonMandela from "../Assets/Images/nelsonMandela.png";
-import steveJobs from "../Assets/Images/steveJobs.png";
-import aboutMainImage from "../Assets/Images/aboutMainImage.png";
+import apj from "../assets/Images/apj.png";
+import billGates from "../assets/Images/billGates.png";
+import einstein from "../assets/Images/einstein.png";
+import nelsonMandela from "../assets/Images/nelsonMandela.png";
+import steveJobs from "../assets/Images/steveJobs.png";
+import aboutMainImage from "../assets/Images/aboutMainImage.png";
 import HomeLayout from "../Layouts/HomeLayout";
 
 function AboutUs() {
