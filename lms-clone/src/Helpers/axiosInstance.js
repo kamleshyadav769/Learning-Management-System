@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL ="https://learning-management-system-2iy5.onrender.com/";               //"http://localhost:5014/api/v1";
+const BASE_URL ="https://learning-management-system-2iy5.onrender.com/api/v1";               //"http://localhost:5014/api/v1";
 
 const axiosInstance = axios.create();
 
