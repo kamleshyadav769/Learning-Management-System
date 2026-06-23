@@ -105,7 +105,9 @@ function AboutUs() {
                             <p className="text-xl text-gray-200">
                                 {"Education is the most powerful tool you can use to change the world."}
                             </p>
-                            <h3 className="text-2xl font-semibold">Nelson Mandela</h3>
+                            {/* <h3 className="text-2xl font-semibold"> */}
+                             <h3 className="text-xl md:text-2xl font-semibold text-center">
+                                Nelson Mandela</h3>
                             <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                                 <a href="#slide5" className="btn btn-circle">❮</a> 
                                 <a href="#slide2" className="btn btn-circle">❯</a>
@@ -119,7 +121,9 @@ function AboutUs() {
                             <p className="text-xl text-gray-200">
                                 {"Failure will never overtake me if my determination to succeed is strong enough."}
                             </p>
-                            <h3 className="text-2xl font-semibold">APJ Abdul Kalam</h3>
+                            {/* <h3 className="text-2xl font-semibold"> */}
+                             <h3 className="text-xl md:text-2xl font-semibold text-center">
+                                APJ Abdul Kalam</h3>
                             <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
                                 <a href="#slide1" className="btn btn-circle">❮</a> 
                                 <a href="#slide3" className="btn btn-circle">❯</a>
