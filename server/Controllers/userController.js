@@ -12,6 +12,8 @@ import { VERIFICATION_EMAIL_TEMPLATE } from '../utils/verifyEmailteplate.js';
 const cookieOptions = {
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   httpOnly: true,
+  secure: true,
+  sameSite: "none",
  
 };
 
