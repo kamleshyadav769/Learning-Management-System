@@ -11,7 +11,7 @@ const router =Router();
     router.post('/reset-password/:resetToken',resetPassword);
     router.post('/change-password',isLoggedIn,changePassword);
     router.put('/update',isLoggedIn,upload.single('avatar'),updateUser);
-    router.post('/verify-email', verifyEmail);
+    //router.post('/verify-email', verifyEmail);   //otp sending on email is verified
 
     export default router;
 

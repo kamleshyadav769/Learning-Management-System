@@ -82,7 +82,7 @@ const user = await User.create({
     }
 
 }
-
+/*    otp sending code portion
        const verificationToken = await user.generateVerificationToken();
        console.log("OTP sent to email:", verificationToken);
        await user.save();
@@ -99,7 +99,7 @@ const user = await User.create({
          await user.save();
          return next(new AppError(e.message, 500));
        }
-
+*/
 
 
     // Setting the password to undefined so it does not get sent in the response
