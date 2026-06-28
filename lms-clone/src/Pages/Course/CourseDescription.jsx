@@ -9,6 +9,7 @@ function CourseDescription() {
     const navigate = useNavigate();
 
     const { role, data } = useSelector((state) => state.auth);
+    console.log("total lectures fetched", state?.numberOfLectures);
 
     return (
         <HomeLayout>
